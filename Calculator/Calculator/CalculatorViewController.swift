@@ -24,7 +24,8 @@ final class CalculatorViewController: UIViewController {
     private var currentNumber: CurrentNumber = .firstNumber
     private var currentOperator: CalculatorOperator? = nil
     private var previousNumber: String? = nil
-  //  private var previousOperator: CalculatorOperator? = nil
+    private var previousOperator: CalculatorOperator? = nil
+    //  private var previousOperator: CalculatorOperator? = nil
 
     private var firstNumber: String? = nil {
         didSet {
@@ -191,7 +192,7 @@ extension CalculatorViewController {
         case .add:
             didSelectOperator(with: .add)
         case .equals:
-            break
+            didSelectEquals()
         case .number(let number):
             didSelectNumber(with: number)
         case .float:
@@ -207,7 +208,7 @@ extension CalculatorViewController {
         secondNumber = nil
         currentOperator = nil
         previousNumber = nil
-   //     previousOperator = nil
+        //     previousOperator = nil
     }
 
     private func didSelectPlusMinus() {
@@ -239,7 +240,7 @@ extension CalculatorViewController {
 
     private func didSelectPercentage() {
         if currentNumber == .firstNumber {
-            if var firstNumber, var number = firstNumber.toDouble {
+            if let firstNumber, var number = firstNumber.toDouble {
                 number /= 100
 
                 if number.isInteger {
@@ -251,7 +252,7 @@ extension CalculatorViewController {
                 //    previousNumber = firstNumber
             }
         } else {
-            if var secondNumber, var number = secondNumber.toDouble {
+            if let secondNumber, var number = secondNumber.toDouble {
                 number /= 100
 
                 if number.isInteger {
@@ -276,10 +277,10 @@ extension CalculatorViewController {
                 /// 5 + 5,2 = 6,2 if isInteger(6,2 == 6.0) ? print(toInt) :print(toDouble)
                 let result = getOperatorResult(currentOperator, firstNumber, secondNumber)
                 let resultString = result.isInteger ? result.toInt?.description : result.description
-                
+
                 self.secondNumber = nil
                 self.firstNumber = resultString
-                self.currentNumber = .firstNumber
+                currentNumber = .firstNumber
                 self.currentOperator = calcOperator
             }
         } else {
@@ -287,8 +288,24 @@ extension CalculatorViewController {
             currentOperator = calcOperator
         }
     }
-    
-    private func didSelectEquals() {}
+
+    private func didSelectEquals() {
+        if let currentOperator, let firstNumber = firstNumber?.toDouble, let secondNumber = secondNumber?.toDouble {
+            let result = getOperatorResult(currentOperator, firstNumber, secondNumber)
+            let resultString = result.isInteger ? result.toInt?.description : result.description
+            print(resultString ?? "")
+            self.secondNumber = nil
+            previousOperator = currentOperator
+            self.currentOperator = nil
+            self.firstNumber = resultString
+            currentNumber = .firstNumber
+        } else if let previousOperator, let firstNumber = firstNumber?.toDouble, let previousNumber = previousNumber?.toDouble {
+            let result = getOperatorResult(previousOperator, firstNumber, previousNumber)
+            let resultString = result.isInteger ? result.toInt?.description : result.description
+
+            self.firstNumber = resultString
+        }
+    }
 
     private func didSelectNumber(with number: Int) {
         if currentNumber == .firstNumber {
