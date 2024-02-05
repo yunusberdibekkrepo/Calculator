@@ -28,6 +28,13 @@ final class ButtonCollectionViewCell: UICollectionViewCell {
         style()
         layout()
     }
+
+    public func setOperationSelected() {
+        UIView.animate(withDuration: 0.3) {
+            self.bodyLabel.textColor = .orange
+            self.backgroundColor = .white
+        }
+    }
 }
 
 extension ButtonCollectionViewCell {

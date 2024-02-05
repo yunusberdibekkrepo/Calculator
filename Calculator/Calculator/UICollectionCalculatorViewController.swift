@@ -7,9 +7,9 @@
 
 import UIKit
 
-// MARK: - FİRST NUMBER VEYA SECOND NUMBER UPDATE OLDUĞUNDA PREVİOUS NUMBER'DA UPDATE OLUYOR. BU YÜZDEN BUNU DİDSET İÇİNE YAZABİLİRİZ.
+// MARK: - SET UP WITH COLLECTION VIEW
 
-final class CalculatorViewController: UIViewController {
+final class UICollectionCalculatorViewController: UIViewController {
     // MARK: - Variables
 
     private let calculatorButtonCells: [CalculatorButton] = [
@@ -20,12 +20,11 @@ final class CalculatorViewController: UIViewController {
         .number(0), .float, .equals
     ]
 
-    private lazy var headerTitle: String = "0"
+    private var headerTitle: String = "0"
     private var currentNumber: CurrentNumber = .firstNumber
     private var currentOperator: CalculatorOperator? = nil
     private var previousNumber: String? = nil
     private var previousOperator: CalculatorOperator? = nil
-    //  private var previousOperator: CalculatorOperator? = nil
 
     private var firstNumber: String? = nil {
         didSet {
@@ -67,7 +66,7 @@ final class CalculatorViewController: UIViewController {
 
 // MARK: - UI Related Functions
 
-extension CalculatorViewController {
+extension UICollectionCalculatorViewController {
     private func style() {
         view.backgroundColor = .systemBackground
     }
@@ -97,7 +96,7 @@ extension CalculatorViewController {
 
 // MARK: - Collection View Extension.
 
-extension CalculatorViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension UICollectionCalculatorViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     /// Header
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
@@ -119,8 +118,16 @@ extension CalculatorViewController: UICollectionViewDataSource, UICollectionView
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ButtonCollectionViewCell.reuseIdentifier, for: indexPath) as? ButtonCollectionViewCell else {
             fatalError()
         }
+        let buttonCell = calculatorButtonCells[indexPath.row]
 
-        cell.configure(with: calculatorButtonCells[indexPath.row])
+        cell.configure(with: buttonCell)
+
+        if let operation = currentOperator, secondNumber == nil {
+            if operation.title == buttonCell.title {
+                cell.setOperationSelected()
+            }
+        }
+
         return cell
     }
 
@@ -128,11 +135,12 @@ extension CalculatorViewController: UICollectionViewDataSource, UICollectionView
         let buttonCell = calculatorButtonCells[indexPath.item]
 
         collectionView.deselectItem(at: indexPath, animated: true)
+
         didSelectButton(calculatorButton: buttonCell)
     }
 }
 
-extension CalculatorViewController: UICollectionViewDelegateFlowLayout {
+extension UICollectionCalculatorViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         let totalCellHeight = collectionView.frame.width
         let totalVerticalCellSpacing = CGFloat(10 * 4)
@@ -174,7 +182,7 @@ extension CalculatorViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension CalculatorViewController {
+extension UICollectionCalculatorViewController {
     private func didSelectButton(calculatorButton: CalculatorButton) {
         switch calculatorButton {
         case .allClear:
@@ -208,7 +216,7 @@ extension CalculatorViewController {
         secondNumber = nil
         currentOperator = nil
         previousNumber = nil
-        //     previousOperator = nil
+        previousOperator = nil
     }
 
     private func didSelectPlusMinus() {
@@ -359,7 +367,7 @@ extension CalculatorViewController {
     }
 }
 
-extension CalculatorViewController {
+extension UICollectionCalculatorViewController {
     private func getOperatorResult(_ calcOperator: CalculatorOperator, _ firstNumber: Double, _ secondNumber: Double) -> Double {
         switch calcOperator {
         case .divide:
@@ -375,5 +383,5 @@ extension CalculatorViewController {
 }
 
 #Preview {
-    CalculatorViewController()
+    UICollectionCalculatorViewController()
 }
