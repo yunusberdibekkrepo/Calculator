@@ -14,8 +14,9 @@ final class UIStackCalculatorViewController: UIViewController {
 
     private let firstRow: [CalculatorButton] = [.allClear, .plusMinus, .percentage, .divide]
     private let secondRow: [CalculatorButton] = [.number(7), .number(8), .number(9), .multiply]
-    private let thirdRow: [CalculatorButton] = [.number(1), .number(2), .number(3), .add]
-    private let fourthRow: [CalculatorButton] = [.number(0), .float, .equals]
+    private let thirdRow: [CalculatorButton] = [.number(4), .number(5), .number(6), .substract]
+    private let fourthRow: [CalculatorButton] = [.number(1), .number(2), .number(3), .add]
+    private let fifthRow: [CalculatorButton] = [.number(0), .float, .equals]
 
     private var currentNumber: CurrentNumber = .firstNumber
     private var currentOperator: CalculatorOperator? = nil
@@ -53,7 +54,7 @@ final class UIStackCalculatorViewController: UIViewController {
     private let secondStackView: UIStackView = .init()
     private let thirdStackView: UIStackView = .init()
     private let fourthStackView: UIStackView = .init()
-
+    private let fifthStackView: UIStackView = .init()
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -67,6 +68,7 @@ final class UIStackCalculatorViewController: UIViewController {
         createStackView(stackView: secondStackView, anchor: firstStackView.bottomAnchor, calcButtons: secondRow)
         createStackView(stackView: thirdStackView, anchor: secondStackView.bottomAnchor, calcButtons: thirdRow)
         createStackView(stackView: fourthStackView, anchor: thirdStackView.bottomAnchor, calcButtons: fourthRow)
+        createStackView(stackView: fifthStackView, anchor: fourthStackView.bottomAnchor, calcButtons: fifthRow)
     }
 }
 
@@ -82,7 +84,7 @@ extension UIStackCalculatorViewController {
             headerView.topAnchor.constraint(equalToSystemSpacingBelow: view.topAnchor, multiplier: 0),
             headerView.leadingAnchor.constraint(equalToSystemSpacingAfter: view.leadingAnchor, multiplier: 0),
             view.trailingAnchor.constraint(equalToSystemSpacingAfter: headerView.trailingAnchor, multiplier: 0),
-            headerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5)
+            headerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4)
         ])
     }
 
