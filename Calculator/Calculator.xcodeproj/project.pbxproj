@@ -23,7 +23,7 @@
 		AAB446502B6B2A380017B8DA /* CalculatorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB4464F2B6B2A380017B8DA /* CalculatorButton.swift */; };
 		AAB446532B6B2BE70017B8DA /* TitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB446522B6B2BE70017B8DA /* TitleLabel.swift */; };
 		AAB446552B6B2BEF0017B8DA /* BodyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB446542B6B2BEF0017B8DA /* BodyLabel.swift */; };
-		BEEF8AE62B76699A003EAB70 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEF8AE52B76699A003EAB70 /* ViewController.swift */; };
+		BEEF8AE62B76699A003EAB70 /* UIStackCalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEF8AE52B76699A003EAB70 /* UIStackCalculatorViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +45,7 @@
 		AAB4464F2B6B2A380017B8DA /* CalculatorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorButton.swift; sourceTree = "<group>"; };
 		AAB446522B6B2BE70017B8DA /* TitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleLabel.swift; sourceTree = "<group>"; };
 		AAB446542B6B2BEF0017B8DA /* BodyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyLabel.swift; sourceTree = "<group>"; };
-		BEEF8AE52B76699A003EAB70 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BEEF8AE52B76699A003EAB70 /* UIStackCalculatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackCalculatorViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,7 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				AAB446312B6B26AC0017B8DA /* UICollectionCalculatorViewController.swift */,
-				BEEF8AE52B76699A003EAB70 /* ViewController.swift */,
+				BEEF8AE52B76699A003EAB70 /* UIStackCalculatorViewController.swift */,
 			);
 			name = Screens;
 			sourceTree = "<group>";
@@ -279,7 +279,7 @@
 				AA0FA6592B70BC6C0010EEA5 /* CalculatorButtonView.swift in Sources */,
 				AAB446532B6B2BE70017B8DA /* TitleLabel.swift in Sources */,
 				AAB446302B6B26AC0017B8DA /* SceneDelegate.swift in Sources */,
-				BEEF8AE62B76699A003EAB70 /* ViewController.swift in Sources */,
+				BEEF8AE62B76699A003EAB70 /* UIStackCalculatorViewController.swift in Sources */,
 				AAB446502B6B2A380017B8DA /* CalculatorButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

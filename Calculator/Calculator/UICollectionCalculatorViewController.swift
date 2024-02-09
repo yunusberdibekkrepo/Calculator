@@ -20,23 +20,20 @@ final class UICollectionCalculatorViewController: UIViewController {
         .number(0), .float, .equals
     ]
 
-    private var headerTitle: String = "0"
+    private var headerTitleText: String = "0"
     private var currentNumber: CurrentNumber = .firstNumber
     private var currentOperator: CalculatorOperator? = nil
     private var previousNumber: String? = nil
-    private var previousOperator: CalculatorOperator? = nil
 
     private var firstNumber: String? = nil {
         didSet {
-            headerTitle = firstNumber ?? "0"
-            previousNumber = firstNumber
+            self.headerTitleText = self.firstNumber ?? "0"
         }
     }
 
     private var secondNumber: String? = nil {
         didSet {
-            headerTitle = secondNumber ?? "0"
-            previousNumber = secondNumber
+            self.headerTitleText = self.secondNumber ?? "0"
         }
     }
 
@@ -72,19 +69,19 @@ extension UICollectionCalculatorViewController {
     }
 
     private func setUpCollectionView() {
-        view.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(self.collectionView)
+        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor,
-                                                   constant: 25)
+            self.collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            self.collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            self.collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            self.collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor,
+                                                        constant: 25)
         ])
 
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
     }
 
     private func updateView() {
@@ -106,19 +103,19 @@ extension UICollectionCalculatorViewController: UICollectionViewDataSource, UICo
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderReusableViewCell.reuseIdentifier, for: indexPath) as? HeaderReusableViewCell else {
             fatalError()
         }
-        header.configure(with: headerTitle)
+        header.configure(with: headerTitleText)
         return header
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        calculatorButtonCells.count
+        self.calculatorButtonCells.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ButtonCollectionViewCell.reuseIdentifier, for: indexPath) as? ButtonCollectionViewCell else {
             fatalError()
         }
-        let buttonCell = calculatorButtonCells[indexPath.row]
+        let buttonCell = self.calculatorButtonCells[indexPath.row]
 
         cell.configure(with: buttonCell)
 
@@ -132,11 +129,11 @@ extension UICollectionCalculatorViewController: UICollectionViewDataSource, UICo
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let buttonCell = calculatorButtonCells[indexPath.item]
+        let buttonCell = self.calculatorButtonCells[indexPath.item]
 
         collectionView.deselectItem(at: indexPath, animated: true)
 
-        didSelectButton(calculatorButton: buttonCell)
+        didSelectButton(buttonCell)
     }
 }
 
@@ -155,7 +152,7 @@ extension UICollectionCalculatorViewController: UICollectionViewDelegateFlowLayo
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let calculatorButton = calculatorButtonCells[indexPath.row]
+        let calculatorButton = self.calculatorButtonCells[indexPath.row]
         let width = collectionView.frame.width
 
         switch calculatorButton {
@@ -183,71 +180,129 @@ extension UICollectionCalculatorViewController: UICollectionViewDelegateFlowLayo
 }
 
 extension UICollectionCalculatorViewController {
-    private func didSelectButton(calculatorButton: CalculatorButton) {
-        switch calculatorButton {
+    private func updateHeaderTitle() {
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView.reloadData()
+        }
+    }
+
+    private func didSelectButton(_ calcButton: CalculatorButton) {
+        switch calcButton {
         case .allClear:
-            didSelectAllClear()
+            self.didSelectAllClear()
         case .plusMinus:
-            didSelectPlusMinus()
+            self.didSelectPlusMinus()
         case .percentage:
-            didSelectPercentage()
+            self.didSelectPlusMinus()
         case .divide:
-            didSelectOperator(with: .divide)
+            self.didSelectOperator(.divide)
         case .multiply:
-            didSelectOperator(with: .multiply)
+            self.didSelectOperator(.multiply)
         case .substract:
-            didSelectOperator(with: .substract)
+            self.didSelectOperator(.substract)
         case .add:
-            didSelectOperator(with: .add)
+            self.didSelectOperator(.add)
         case .equals:
-            didSelectEquals()
+            self.didSelectEquals()
         case .number(let number):
-            didSelectNumber(with: number)
+            self.didSelectNumber(number)
         case .float:
-            didSelectFloat()
+            self.didSelectFloat()
         }
 
-        updateView()
+        self.updateHeaderTitle()
     }
 
-    private func didSelectAllClear() {
-        currentNumber = .firstNumber
-        firstNumber = nil
-        secondNumber = nil
-        currentOperator = nil
-        previousNumber = nil
-        previousOperator = nil
-    }
-
-    private func didSelectPlusMinus() {
-        switch currentNumber {
+    private func didSelectOperator(_ selectedOperator: CalculatorOperator) {
+        switch self.currentNumber {
         case .firstNumber:
-            guard var firstNumber else { return }
-
-            if firstNumber.contains("-") {
-                firstNumber.removeFirst()
-            } else {
-                firstNumber.insert(contentsOf: "-", at: firstNumber.startIndex)
-            }
-
-            self.firstNumber = firstNumber
-            previousNumber = firstNumber
+            self.currentNumber = .secondNumber
+            self.currentOperator = selectedOperator
         case .secondNumber:
-            guard var secondNumber else { return }
+            if let currentOperator, let number1 = firstNumber?.toDouble, let number2 = secondNumber?.toDouble {
+                let result = self.getOperatorResult(currentOperator, number1, number2)
+                let resultStr = result.isInteger ? result.toInt?.description : result.description
 
-            if secondNumber.contains("-") {
-                secondNumber.removeFirst()
+                self.secondNumber = nil
+                self.firstNumber = resultStr
+                self.currentNumber = .firstNumber
+                self.currentOperator = selectedOperator
             } else {
-                secondNumber.insert(contentsOf: "-", at: secondNumber.startIndex)
+                currentOperator = selectedOperator
             }
+        }
+    }
 
-            self.secondNumber = secondNumber
-            //   previousNumber = secondNumber
+    private func didSelectNumber(_ number: Int) {
+        switch self.currentNumber {
+        case .firstNumber:
+            if var number1 = firstNumber {
+                number1.append(number.description)
+                self.firstNumber = number1
+                self.previousNumber = number1
+            } else {
+                self.firstNumber = number.description
+                self.previousNumber = number.description
+            }
+        case .secondNumber:
+            if var number2 = secondNumber {
+                number2.append(number.description)
+                self.secondNumber = number2
+                self.previousNumber = number2
+            } else {
+                self.secondNumber = number.description
+                self.previousNumber = number.description
+            }
+        }
+    }
+
+    // TODO: NUMB+NUMB2 EQUALS EQULAS SUBSTRACT ÇALIŞMIYOR.
+    private func didSelectEquals() {
+        if let currentOperator, let number1 = firstNumber?.toDouble, let number2 = secondNumber?.toDouble {
+            let result = self.getOperatorResult(currentOperator, number1, number2)
+            let resultString = result.isInteger ? result.toInt?.description : result.description
+
+            self.secondNumber = nil
+            self.firstNumber = resultString
+            self.previousNumber = number2.description
+            self.currentNumber = .secondNumber
+            print("1")
+        } else if let currentOperator, let number1 = firstNumber?.toDouble, let number2 = previousNumber?.toDouble {
+            let result = self.getOperatorResult(currentOperator, number1, number2)
+            let resultString = result.isInteger ? result.toInt?.description : result.description
+
+            self.firstNumber = resultString
+            self.currentNumber = .secondNumber
+            print("2")
+        }
+    }
+
+    private func didSelectFloat() {
+        switch self.currentNumber {
+        case .firstNumber:
+            if var number1 = firstNumber {
+                guard !number1.contains(".") else { return }
+
+                number1.append(".")
+                self.firstNumber = number1
+            } else {
+                self.firstNumber = "0."
+            }
+        case .secondNumber:
+            if var number2 = secondNumber {
+                guard !number2.contains(".") else { return }
+
+                number2.append(".")
+                self.secondNumber = number2
+            } else {
+                self.secondNumber = "0."
+            }
         }
     }
 
     private func didSelectPercentage() {
-        if currentNumber == .firstNumber {
+        switch self.currentNumber {
+        case .firstNumber:
             if let firstNumber, var number = firstNumber.toDouble {
                 number /= 100
 
@@ -256,10 +311,8 @@ extension UICollectionCalculatorViewController {
                 } else {
                     self.firstNumber = number.description
                 }
-
-                //    previousNumber = firstNumber
             }
-        } else {
+        case .secondNumber:
             if let secondNumber, var number = secondNumber.toDouble {
                 number /= 100
 
@@ -268,106 +321,45 @@ extension UICollectionCalculatorViewController {
                 } else {
                     self.secondNumber = number.description
                 }
-
-                //    previousNumber = secondNumber
             }
         }
     }
 
-    private func didSelectOperator(with calcOperator: CalculatorOperator) {
-        if currentNumber == .firstNumber {
-            /// 2"+"
-            currentOperator = calcOperator
-            currentNumber = .secondNumber
-        } else if currentNumber == .secondNumber {
-            /// 2+5"+"
-            if let currentOperator = currentOperator, let firstNumber = firstNumber?.toDouble, let secondNumber = secondNumber?.toDouble {
-                /// 5 + 5,2 = 6,2 if isInteger(6,2 == 6.0) ? print(toInt) :print(toDouble)
-                let result = getOperatorResult(currentOperator, firstNumber, secondNumber)
-                let resultString = result.isInteger ? result.toInt?.description : result.description
+    private func didSelectPlusMinus() {
+        switch self.currentNumber {
+        case .firstNumber:
+            guard var number1 = firstNumber else { return }
 
-                self.secondNumber = nil
-                self.firstNumber = resultString
-                currentNumber = .firstNumber
-                self.currentOperator = calcOperator
-            }
-        } else {
-            /// 2+"+""
-            currentOperator = calcOperator
-        }
-    }
-
-    private func didSelectEquals() {
-        if let currentOperator, let firstNumber = firstNumber?.toDouble, let secondNumber = secondNumber?.toDouble {
-            let result = getOperatorResult(currentOperator, firstNumber, secondNumber)
-            let resultString = result.isInteger ? result.toInt?.description : result.description
-            print(resultString ?? "")
-            self.secondNumber = nil
-            previousOperator = currentOperator
-            self.currentOperator = nil
-            self.firstNumber = resultString
-            currentNumber = .firstNumber
-        } else if let previousOperator, let firstNumber = firstNumber?.toDouble, let previousNumber = previousNumber?.toDouble {
-            let result = getOperatorResult(previousOperator, firstNumber, previousNumber)
-            let resultString = result.isInteger ? result.toInt?.description : result.description
-
-            self.firstNumber = resultString
-        }
-    }
-
-    private func didSelectNumber(with number: Int) {
-        if currentNumber == .firstNumber {
-            if var firstNumber {
-                firstNumber.append(number.description)
-                self.firstNumber = firstNumber
-                //        previousNumber = firstNumber
+            if number1.contains("-") {
+                number1.removeFirst()
             } else {
-                /// İlk defa basıldığı zaman first number buradan değer almaktadır. Daha sonradan string'e bir veri ekleneği için yukarıda if bloğuna girer. Operation belirlenene kadar firstNumber'a veri eklenmesi devam eder.
-                firstNumber = number.description
-                //    previousNumber = number.description
+                number1.insert(contentsOf: "-", at: number1.startIndex)
             }
-        } else {
-            if var secondNumber {
-                secondNumber.append(number.description)
-                self.secondNumber = secondNumber
-                //            previousNumber = secondNumber
+
+            self.firstNumber = number1
+            self.previousNumber = number1
+        case .secondNumber:
+            guard var number2 = secondNumber else { return }
+
+            if number2.contains("-") {
+                number2.removeFirst()
             } else {
-                secondNumber = number.description
-                //         previousNumber = number.description
+                number2.insert(contentsOf: "-", at: number2.startIndex)
             }
+
+            self.secondNumber = number2
+            self.previousNumber = number2
         }
     }
 
-    private func didSelectFloat() {
-        if currentNumber == .firstNumber {
-            if var firstNumber {
-                guard !firstNumber.contains(".") else { return }
-
-                firstNumber.append(".")
-                self.firstNumber = firstNumber
-                //  previousNumber = firstNumber
-            } else {
-                /// Eğer firstNumber nil iken .'ya basılıyor ise 0. diye başlanılır. Onun dışında ise "number + ." olur.
-                firstNumber = "0."
-                //    previousNumber = "0."
-            }
-        } else {
-            if var secondNumber {
-                guard !secondNumber.contains(".") else { return }
-
-                secondNumber.append(".")
-                self.secondNumber = secondNumber
-                //        previousNumber = secondNumber
-            } else {
-                /// Eğer firstNumber nil iken .'ya basılıyor ise 0. diye başlanılır. Onun dışında ise "number + ." olur.
-                secondNumber = "0."
-                //         previousNumber = "0."
-            }
-        }
+    private func didSelectAllClear() {
+        self.currentNumber = .firstNumber
+        self.secondNumber = nil
+        self.firstNumber = nil
+        self.previousNumber = nil
+        self.currentOperator = nil
     }
-}
 
-extension UICollectionCalculatorViewController {
     private func getOperatorResult(_ calcOperator: CalculatorOperator, _ firstNumber: Double, _ secondNumber: Double) -> Double {
         switch calcOperator {
         case .divide:
