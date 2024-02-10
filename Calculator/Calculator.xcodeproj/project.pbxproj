@@ -59,24 +59,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AA0FA64E2B6F57FC0010EEA5 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				AA0FA64F2B6F580E0010EEA5 /* String+Extension.swift */,
-				AA0FA6512B6F589C0010EEA5 /* Double+Extension.swift */,
-				AA0FA6532B6F58C20010EEA5 /* FloatingPoint+Extension.swift */,
-			);
-			name = Extensions;
-			sourceTree = "<group>";
-		};
-		AA0FA6572B70BC530010EEA5 /* Buttons */ = {
-			isa = PBXGroup;
-			children = (
-				AA0FA6582B70BC6C0010EEA5 /* CalculatorButtonView.swift */,
-			);
-			name = Buttons;
-			sourceTree = "<group>";
-		};
 		AAB446212B6B26AC0017B8DA = {
 			isa = PBXGroup;
 			children = (
@@ -97,11 +79,10 @@
 			isa = PBXGroup;
 			children = (
 				AAB446422B6B276C0017B8DA /* App */,
-				AAB446472B6B297A0017B8DA /* Core */,
-				AAB446462B6B29720017B8DA /* Utils */,
-				AAB446442B6B29670017B8DA /* Screens */,
-				AAB446452B6B296B0017B8DA /* Product */,
-				AAB446432B6B29630017B8DA /* Resources */,
+				BE8DD90F2B776FC9004E8535 /* Utils */,
+				BE8DD9112B776FEB004E8535 /* Screens */,
+				BE8DD9122B777005004E8535 /* Product */,
+				BE8DD9182B777057004E8535 /* Resources */,
 			);
 			path = Calculator;
 			sourceTree = "<group>";
@@ -117,15 +98,25 @@
 			name = App;
 			sourceTree = "<group>";
 		};
-		AAB446432B6B29630017B8DA /* Resources */ = {
+		BE8DD90F2B776FC9004E8535 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				AAB446362B6B26AD0017B8DA /* Assets.xcassets */,
+				BE8DD9102B776FD7004E8535 /* Extension */,
 			);
-			name = Resources;
+			name = Utils;
 			sourceTree = "<group>";
 		};
-		AAB446442B6B29670017B8DA /* Screens */ = {
+		BE8DD9102B776FD7004E8535 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				AA0FA64F2B6F580E0010EEA5 /* String+Extension.swift */,
+				AA0FA6512B6F589C0010EEA5 /* Double+Extension.swift */,
+				AA0FA6532B6F58C20010EEA5 /* FloatingPoint+Extension.swift */,
+			);
+			name = Extension;
+			sourceTree = "<group>";
+		};
+		BE8DD9112B776FEB004E8535 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
 				AAB446312B6B26AC0017B8DA /* UICollectionCalculatorViewController.swift */,
@@ -134,50 +125,17 @@
 			name = Screens;
 			sourceTree = "<group>";
 		};
-		AAB446452B6B296B0017B8DA /* Product */ = {
+		BE8DD9122B777005004E8535 /* Product */ = {
 			isa = PBXGroup;
 			children = (
-				AAB4464A2B6B29DD0017B8DA /* Models */,
-				AAB446492B6B29970017B8DA /* Cells */,
-				AAB446482B6B29920017B8DA /* Components */,
+				BE8DD9132B77700A004E8535 /* Models */,
+				BE8DD9142B77700E004E8535 /* Cells */,
+				BE8DD9152B777022004E8535 /* Components */,
 			);
 			name = Product;
 			sourceTree = "<group>";
 		};
-		AAB446462B6B29720017B8DA /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				AA0FA64E2B6F57FC0010EEA5 /* Extensions */,
-			);
-			name = Utils;
-			sourceTree = "<group>";
-		};
-		AAB446472B6B297A0017B8DA /* Core */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Core;
-			sourceTree = "<group>";
-		};
-		AAB446482B6B29920017B8DA /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				AA0FA6572B70BC530010EEA5 /* Buttons */,
-				AAB446512B6B2BCF0017B8DA /* Labels */,
-			);
-			name = Components;
-			sourceTree = "<group>";
-		};
-		AAB446492B6B29970017B8DA /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				AAB4464B2B6B2A0C0017B8DA /* HeaderReusableViewCell.swift */,
-				AAB4464D2B6B2A220017B8DA /* ButtonCollectionViewCell.swift */,
-			);
-			name = Cells;
-			sourceTree = "<group>";
-		};
-		AAB4464A2B6B29DD0017B8DA /* Models */ = {
+		BE8DD9132B77700A004E8535 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				AAB4464F2B6B2A380017B8DA /* CalculatorButton.swift */,
@@ -187,13 +145,47 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		AAB446512B6B2BCF0017B8DA /* Labels */ = {
+		BE8DD9142B77700E004E8535 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				AAB4464B2B6B2A0C0017B8DA /* HeaderReusableViewCell.swift */,
+				AAB4464D2B6B2A220017B8DA /* ButtonCollectionViewCell.swift */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		BE8DD9152B777022004E8535 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				BE8DD9172B77702D004E8535 /* Buttons */,
+				BE8DD9162B777028004E8535 /* Labels */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
+		BE8DD9162B777028004E8535 /* Labels */ = {
 			isa = PBXGroup;
 			children = (
 				AAB446522B6B2BE70017B8DA /* TitleLabel.swift */,
 				AAB446542B6B2BEF0017B8DA /* BodyLabel.swift */,
 			);
 			name = Labels;
+			sourceTree = "<group>";
+		};
+		BE8DD9172B77702D004E8535 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				AA0FA6582B70BC6C0010EEA5 /* CalculatorButtonView.swift */,
+			);
+			name = Buttons;
+			sourceTree = "<group>";
+		};
+		BE8DD9182B777057004E8535 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AAB446362B6B26AD0017B8DA /* Assets.xcassets */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
