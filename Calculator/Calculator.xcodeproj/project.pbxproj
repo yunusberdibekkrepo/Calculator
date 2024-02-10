@@ -78,114 +78,26 @@
 		AAB4462C2B6B26AC0017B8DA /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
-				AAB446422B6B276C0017B8DA /* App */,
-				BE8DD90F2B776FC9004E8535 /* Utils */,
-				BE8DD9112B776FEB004E8535 /* Screens */,
-				BE8DD9122B777005004E8535 /* Product */,
-				BE8DD9182B777057004E8535 /* Resources */,
-			);
-			path = Calculator;
-			sourceTree = "<group>";
-		};
-		AAB446422B6B276C0017B8DA /* App */ = {
-			isa = PBXGroup;
-			children = (
-				AAB446382B6B26AD0017B8DA /* LaunchScreen.storyboard */,
-				AAB4462D2B6B26AC0017B8DA /* AppDelegate.swift */,
 				AAB4462F2B6B26AC0017B8DA /* SceneDelegate.swift */,
 				AAB4463B2B6B26AD0017B8DA /* Info.plist */,
-			);
-			name = App;
-			sourceTree = "<group>";
-		};
-		BE8DD90F2B776FC9004E8535 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				BE8DD9102B776FD7004E8535 /* Extension */,
-			);
-			name = Utils;
-			sourceTree = "<group>";
-		};
-		BE8DD9102B776FD7004E8535 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				AA0FA64F2B6F580E0010EEA5 /* String+Extension.swift */,
+				AAB4462D2B6B26AC0017B8DA /* AppDelegate.swift */,
+				AAB446382B6B26AD0017B8DA /* LaunchScreen.storyboard */,
 				AA0FA6512B6F589C0010EEA5 /* Double+Extension.swift */,
+				AA0FA64C2B6F3FBD0010EEA5 /* CurrentNumber.swift */,
 				AA0FA6532B6F58C20010EEA5 /* FloatingPoint+Extension.swift */,
-			);
-			name = Extension;
-			sourceTree = "<group>";
-		};
-		BE8DD9112B776FEB004E8535 /* Screens */ = {
-			isa = PBXGroup;
-			children = (
+				AAB446522B6B2BE70017B8DA /* TitleLabel.swift */,
+				AA0FA64F2B6F580E0010EEA5 /* String+Extension.swift */,
 				AAB446312B6B26AC0017B8DA /* UICollectionCalculatorViewController.swift */,
 				BEEF8AE52B76699A003EAB70 /* UIStackCalculatorViewController.swift */,
-			);
-			name = Screens;
-			sourceTree = "<group>";
-		};
-		BE8DD9122B777005004E8535 /* Product */ = {
-			isa = PBXGroup;
-			children = (
-				BE8DD9132B77700A004E8535 /* Models */,
-				BE8DD9142B77700E004E8535 /* Cells */,
-				BE8DD9152B777022004E8535 /* Components */,
-			);
-			name = Product;
-			sourceTree = "<group>";
-		};
-		BE8DD9132B77700A004E8535 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				AAB4464F2B6B2A380017B8DA /* CalculatorButton.swift */,
 				AA0FA64A2B6F3DFC0010EEA5 /* CalculatorOperator.swift */,
-				AA0FA64C2B6F3FBD0010EEA5 /* CurrentNumber.swift */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
-		BE8DD9142B77700E004E8535 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				AAB4464B2B6B2A0C0017B8DA /* HeaderReusableViewCell.swift */,
-				AAB4464D2B6B2A220017B8DA /* ButtonCollectionViewCell.swift */,
-			);
-			name = Cells;
-			sourceTree = "<group>";
-		};
-		BE8DD9152B777022004E8535 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				BE8DD9172B77702D004E8535 /* Buttons */,
-				BE8DD9162B777028004E8535 /* Labels */,
-			);
-			name = Components;
-			sourceTree = "<group>";
-		};
-		BE8DD9162B777028004E8535 /* Labels */ = {
-			isa = PBXGroup;
-			children = (
-				AAB446522B6B2BE70017B8DA /* TitleLabel.swift */,
 				AAB446542B6B2BEF0017B8DA /* BodyLabel.swift */,
-			);
-			name = Labels;
-			sourceTree = "<group>";
-		};
-		BE8DD9172B77702D004E8535 /* Buttons */ = {
-			isa = PBXGroup;
-			children = (
-				AA0FA6582B70BC6C0010EEA5 /* CalculatorButtonView.swift */,
-			);
-			name = Buttons;
-			sourceTree = "<group>";
-		};
-		BE8DD9182B777057004E8535 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
+				AAB4464D2B6B2A220017B8DA /* ButtonCollectionViewCell.swift */,
 				AAB446362B6B26AD0017B8DA /* Assets.xcassets */,
+				AA0FA6582B70BC6C0010EEA5 /* CalculatorButtonView.swift */,
+				AAB4464B2B6B2A0C0017B8DA /* HeaderReusableViewCell.swift */,
+				AAB4464F2B6B2A380017B8DA /* CalculatorButton.swift */,
 			);
-			name = Resources;
+			path = Calculator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
