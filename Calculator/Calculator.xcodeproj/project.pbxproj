@@ -88,19 +88,9 @@
 		BE8DD9192B77CC2F004E8535 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				BE8DD91A2B77CC3B004E8535 /* Extension */,
-				AA0FA6512B6F589C0010EEA5 /* Double+Extension.swift */,
-				AA0FA6532B6F58C20010EEA5 /* FloatingPoint+Extension.swift */,
-				AA0FA64F2B6F580E0010EEA5 /* String+Extension.swift */,
+				BE8DD9222B77D043004E8535 /* Extensions */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		BE8DD91A2B77CC3B004E8535 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extension;
 			sourceTree = "<group>";
 		};
 		BE8DD91B2B77CC42004E8535 /* Screens */ = {
@@ -167,6 +157,16 @@
 				AAB4463B2B6B26AD0017B8DA /* Info.plist */,
 			);
 			name = App;
+			sourceTree = "<group>";
+		};
+		BE8DD9222B77D043004E8535 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AA0FA6512B6F589C0010EEA5 /* Double+Extension.swift */,
+				AA0FA6532B6F58C20010EEA5 /* FloatingPoint+Extension.swift */,
+				AA0FA64F2B6F580E0010EEA5 /* String+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
