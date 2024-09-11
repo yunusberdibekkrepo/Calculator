@@ -72,13 +72,23 @@ extension UICollectionCalculatorViewController {
         view.addSubview(self.collectionView)
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
 
-        NSLayoutConstraint.activate([
-            self.collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            self.collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            self.collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            self.collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor,
-                                                        constant: 25)
-        ])
+        NSLayoutConstraint.activate(
+            [
+                self.collectionView.topAnchor.constraint(
+                    equalTo: view.topAnchor
+                ),
+                self.collectionView.leadingAnchor.constraint(
+                    equalTo: view.leadingAnchor
+                ),
+                self.collectionView.trailingAnchor.constraint(
+                    equalTo: view.trailingAnchor
+                ),
+                self.collectionView.bottomAnchor.constraint(
+                    equalTo: view.bottomAnchor,
+                    constant: 25
+                )
+            ]
+        )
 
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
@@ -159,11 +169,13 @@ extension UICollectionCalculatorViewController: UICollectionViewDelegateFlowLayo
         case .number(let int) where int == 0:
             return CGSize(
                 width: (width / 5) * 2 + ((width / 5) / 3),
-                height: width / 5)
+                height: width / 5
+            )
         default:
             return CGSize(
                 width: width / 5,
-                height: width / 5)
+                height: width / 5
+            )
         }
     }
 
